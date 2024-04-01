@@ -1,0 +1,13 @@
+const express = require("express");
+const upload = require("../helper/multerupload");
+const router = express.Router();
+const imageupload = require("../middleware/imageupload");
+const imageupdate=require("../middleware/imageupdate");
+const {addBlog,getBlogs,editBlog,deleteBlog,getSingleBLog}= require("../controller/blogController");
+const verifyToken=require("../middleware/auth");
+router.post("/create",verifyToken,upload.single("photo"),imageupload, addBlog);
+router.get("/:id", getSingleBLog);
+router.get("/category/:category", getBlogs);
+router.put("/update/:id",verifyToken,upload.single("photo"),imageupdate,editBlog);
+router.delete("/delete/:id",verifyToken,deleteBlog);
+module.exports=router;  
