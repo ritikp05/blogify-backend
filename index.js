@@ -9,6 +9,7 @@ dotenv.config();
 app.use(cors());
 app.use("/api/auth", userRoutes);
 app.use("/api/blog", blogRoutes);
+
 const dbConnect = require("./db/dbconfig");
 
 dbConnect(process.env.URL);

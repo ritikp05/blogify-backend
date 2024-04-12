@@ -11,16 +11,16 @@ async function addBlog(req, res) {
       category,
     });
     if (!blog) {
-      res.json({
+      res.status(403).json({
         msg: "something went wrong",
       });
     }
-    return res.json({
+    return res.status(200).json({
       msg: "Blog created Sucessfully",
       blog,
     });
   } catch (err) {
-    res.json({
+    res.status(403).json({
       msg: err.message,
     });
   }
@@ -31,7 +31,7 @@ async function getBlogs(req, res) {
   try {
     if (category === "all") {
       const blogs = await Blog.find({}).populate("userId", "-password");
-      return res.json({
+      return res.status(200).json({
         blogs,
       });
     }
@@ -50,7 +50,7 @@ async function getBlogs(req, res) {
       blogs,
     });
   } catch (err) {
-    return res.json({
+    return res.status(400).json({
       msg: err.message,
     });
   }
@@ -87,11 +87,11 @@ async function editBlog(req, res) {
         blog: updatedBlog,
       });
     }
-    res.json({
+    res.status(403).json({
       msg: "You can only edit blogs published by you",
     });
   } catch (err) {
-    res.json({
+    res.status(403).json({
       msg: err.message,
     });
   }
