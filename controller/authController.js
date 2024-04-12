@@ -148,21 +148,22 @@ async function sendMailController(req, res) {
 }
 
 async function resetPasswordController(req, res) {
-  const { otp, email, password, confirmpassword } = req.body;
+  const { otp, email, password } = req.body;
   try {
-    if (!(otp && email && password && confirmpassword)) {
+    if (!(otp && email && password)) {
       return res.status(403).json({ msg: "Plese provide all required fields" });
     }
 
-    if (password == confirmpassword) {
-      const user = await Otp.findOne(email);
-      if (!user) {
-        return res.status(403).json({ msg: "Invalid email address" });
-      }
+    const user = await Otp.findOne({email});
+    if (!user) {
+      return res.status(403).json({ msg: "Invalid email address" });
+    }
+    if (otp ==user.otp ) {
+    
       if (email == user.email) {
         const time = Date.now();
         if (time > user.time) {
-          return res.status(403).json({ msg: "Invalid otp" });
+          return res.status(403).json({ msg: "Otp expired " });
         }
         const hashedpassword = await becrypt.hash(password, 10);
         const Updateduser = await User.findOneAndUpdate(
@@ -180,7 +181,7 @@ async function resetPasswordController(req, res) {
     } else {
       res
         .status(403)
-        .json({ msg: "password is not matching with confirm password" });
+        .json({ msg: "Invalid otp" });
     }
   } catch (err) {
     res.status(404).json({ msg: err.message });
