@@ -13,5 +13,5 @@ router.post("/login", loginController);
 router.put("/updatepassword", verifyToken, updatePasswordController);
 router.put("/forgetpassword",verifyToken, forgotPasswordController);
 router.post("/sendmail",otpgenrator,sendMailController);
-router.post("/resetpassword",resetPasswordController);
+router.put("/resetpassword",resetPasswordController);
 module.exports = router;

@@ -9,7 +9,7 @@ async function optGenerator(req, res, next) {
       return res.status(404).json({ msg: "Invalid Email" });
     }
 
-    const randomNo = Math.floor(Math.random() * 1000000);
+    const randomNo = Math.floor(Math.random()* 1000000);
 
     const otp = await Otp.findOneAndUpdate(
       { email },

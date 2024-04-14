@@ -3,9 +3,16 @@ const User = require("../model/user");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const Otp = require("../model/opt");
+const dotenv = require("dotenv");
+dotenv.config();
 async function registerController(req, res) {
   const { name, password, email } = req.body;
   const existingUser = await User.findOne({ email });
+  if (existingUser) {
+    return res.status(400).json({
+      msg: "User already exists",
+    });
+  }
   if (!existingUser) {
     try {
       const hashedpassword = await becrypt.hash(password, 10);
@@ -20,7 +27,7 @@ async function registerController(req, res) {
         "-password"
       );
 
-      res.json({
+      res.status(200).json({
         msg: "User registered Sucessfully",
         user: userWithoutPassword,
       });
@@ -117,16 +124,16 @@ async function sendMailController(req, res) {
       service: "gmail",
       port: 587,
       auth: {
-        user: "kushagarakp10@gmail.com",
-        pass: "oxvl hhxb jpku iael",
+        user: process.env.EMAIL,
+        pass: process.env.PASS,
       },
     });
 
     const mailOptions = {
       from: '"Ritik pandey" <kushagarakp10@gmail.com>',
-      to: req.body.email, // list of receivers
-      subject: "Otp for Reseting password", // Subject line
-      text: "otp", // plain text body
+      to: req.body.email,
+      subject: "Otp for Reseting password",
+      text: "otp",
       html: `<b>Your otp is ${req.body.otp} and it is valid for 2 minutes</b>`,
     };
     transporter.sendMail(mailOptions, (err, info) => {
@@ -154,12 +161,11 @@ async function resetPasswordController(req, res) {
       return res.status(403).json({ msg: "Plese provide all required fields" });
     }
 
-    const user = await Otp.findOne({email});
+    const user = await Otp.findOne({ email });
     if (!user) {
       return res.status(403).json({ msg: "Invalid email address" });
     }
-    if (otp ==user.otp ) {
-    
+    if (otp == user.otp) {
       if (email == user.email) {
         const time = Date.now();
         if (time > user.time) {
@@ -179,9 +185,7 @@ async function resetPasswordController(req, res) {
         }
       }
     } else {
-      res
-        .status(403)
-        .json({ msg: "Invalid otp" });
+      res.status(403).json({ msg: "Invalid otp" });
     }
   } catch (err) {
     res.status(404).json({ msg: err.message });

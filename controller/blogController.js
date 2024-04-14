@@ -11,7 +11,7 @@ async function addBlog(req, res) {
       category,
     });
     if (!blog) {
-      res.status(403).json({
+     return res.status(403).json({
         msg: "something went wrong",
       });
     }
@@ -20,7 +20,7 @@ async function addBlog(req, res) {
       blog,
     });
   } catch (err) {
-    res.status(403).json({
+  return  res.status(403).json({
       msg: err.message,
     });
   }
@@ -111,7 +111,7 @@ async function deleteBlog(req, res) {
     if (blog.userId != req.user._id) {
       return res
         .status(403)
-        .json({ msg: "Unauthorized: You can only delete your own blogs" });
+        .json({ msg: " You can only delete your own blogs" });
     }
 
     const deletedBlog = await Blog.findByIdAndDelete(id);
