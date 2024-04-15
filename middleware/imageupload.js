@@ -3,10 +3,6 @@ const cloudinary = require("../helper/cloudinaryConfig");
 
 async function imageupload(req, res, next) {
   try {
-    if(!(req.file.mimetype ==="image/png" || req.file.mimetype=== "image/jpeg")){
-      return res.json({ msg: "please upload an image" });
-    
-    }
     const result = await cloudinary.uploader.upload(req.file.path);
     if (result) {
       
