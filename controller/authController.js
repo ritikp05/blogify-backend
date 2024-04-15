@@ -61,7 +61,7 @@ async function loginController(req, res) {
         msg: "invalid password",
       });
     }
-    const token = await jwt.sign({ existingUser }, "secret");
+    const token = await jwt.sign({ existingUser }, process.env.KEY);
 
     if (token) {
       return res.status(200).json({

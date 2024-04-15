@@ -1,11 +1,12 @@
 const jwt=require("jsonwebtoken");
-
+const dotenv=require("dotenv");
+dotenv.config()
 function verfiytoken(req,res,next){
 
 
 
     const token=req.headers.authorization;
-jwt.verify(token,"secret",(err,decode)=>{
+jwt.verify(token,process.env.KEY,(err,decode)=>{
 try{
 
     if(!err){
