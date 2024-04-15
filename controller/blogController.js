@@ -1,4 +1,4 @@
-const { default: Blogs } = require("../../client/blog/src/Pages/Blogs");
+
 const Blog = require("../model/blog");
 async function addBlog(req, res) {
   const { title, description, category, image } = req.body;
