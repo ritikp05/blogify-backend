@@ -67,6 +67,9 @@ async function getSingleBLog(req, res) {
         msg: "No blog found",
       });
     }
+    blog.views+=1;
+    await blog.save();
+
     return res.status(200).send({
       blog,
     });
