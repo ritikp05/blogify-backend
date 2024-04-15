@@ -1,3 +1,4 @@
+const { default: Blogs } = require("../../client/blog/src/Pages/Blogs");
 const Blog = require("../model/blog");
 async function addBlog(req, res) {
   const { title, description, category, image } = req.body;
@@ -9,9 +10,10 @@ async function addBlog(req, res) {
       description,
       image,
       category,
+      views:0,
     });
     if (!blog) {
-     return res.status(403).json({
+      return res.status(403).json({
         msg: "something went wrong",
       });
     }
@@ -20,7 +22,7 @@ async function addBlog(req, res) {
       blog,
     });
   } catch (err) {
-  return  res.status(403).json({
+    return res.status(403).json({
       msg: err.message,
     });
   }
@@ -60,7 +62,6 @@ async function getSingleBLog(req, res) {
   const id = req.params.id;
   try {
     const blog = await Blog.findById(id).populate("userId", "-password");
-
     if (!blog) {
       return res.status(404).send({
         msg: "No blog found",
