@@ -19,13 +19,13 @@ const blogSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    views:{
-type:Number,
-default: 0,
-    }
-   , category: {
+    views: {
+      type: Number,
+      default: 0,
+    },
+    category: {
       type: String,
-      enum: ["travel", "technology","food","fitness"],
+      enum: ["travel", "technology", "food", "fitness"],
       required: true,
     },
   },
@@ -36,4 +36,4 @@ default: 0,
 
 const Blog = mongoose.model("Blog", blogSchema);
 
-module.exports =Blog;
+module.exports = Blog;

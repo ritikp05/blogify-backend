@@ -1,4 +1,3 @@
-
 const Blog = require("../model/blog");
 async function addBlog(req, res) {
   const { title, description, category, image } = req.body;
@@ -10,7 +9,7 @@ async function addBlog(req, res) {
       description,
       image,
       category,
-      views:0,
+      views: 0,
     });
     if (!blog) {
       return res.status(403).json({
@@ -67,7 +66,7 @@ async function getSingleBLog(req, res) {
         msg: "No blog found",
       });
     }
-    blog.views+=1;
+    blog.views += 1;
     await blog.save();
 
     return res.status(200).send({

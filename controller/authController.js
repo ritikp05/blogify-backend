@@ -107,16 +107,6 @@ async function updatePasswordController(req, res) {
   }
 }
 
-async function forgotPasswordController(req, res) {
-  const { email } = req.body;
-  const user = await User.findById(req.user._id);
-  if (user.email === email) {
-  } else {
-    res.json({
-      msg: "Email not found",
-    });
-  }
-}
 
 async function sendMailController(req, res) {
   try {
