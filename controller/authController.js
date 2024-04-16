@@ -185,7 +185,6 @@ module.exports = {
   registerController,
   loginController,
   updatePasswordController,
-  forgotPasswordController,
   sendMailController,
   resetPasswordController,
 };

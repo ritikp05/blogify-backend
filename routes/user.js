@@ -6,7 +6,7 @@ const {
   registerController,
   loginController,
   updatePasswordController,
-forgotPasswordController,sendMailController,resetPasswordController} = require("../controller/authController");
+sendMailController,resetPasswordController} = require("../controller/authController");
 
 router.post("/register", registerController);
 router.post("/login", loginController);
